@@ -1,0 +1,23 @@
+.form-background{
+	background: #12c2e9;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.main-form{
+	background: white;
+	border-radius: 10px;
+	padding: 3rem;
+}
+
+.main-form .header{
+	color:#333333;
+	text-align: center;
+	margin:2rem auto;
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+}

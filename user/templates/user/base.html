@@ -1,0 +1,20 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'user/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700" rel="stylesheet">
+    <title>Attendance System</title>
+  </head>
+  <body>
+    {% block content %}
+    {% endblock content %}
+
+    <script src="user/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="user/js/popper.min.js"></script>
+    <script src="user/js/bootstrap.min.js"></script>
+  </body>
+</html>
