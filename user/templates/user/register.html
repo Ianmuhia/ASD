@@ -1,0 +1,23 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+	<div class="container-fluid form-background">
+		<div class="main-form" >
+			<form method="post">
+				<h1 class="header">Sign Up</h1>
+				{% csrf_token %}
+				{% for field in form %}
+					{{ field.label_tag }}<br/>
+					{{ field }}<br/>
+					{% for error in field.errors %}
+			           <div class="row">
+			             <div class="alert alert-danger">{{error}}</div>
+			           </div>
+		          {% endfor %}
+				{% endfor %}
+				<button type="submit" class="form-button"><span>Sign Up</span></button>
+			</form>
+			<span class="text-muted">Already Have an Account?<a class="ml-2" href="{% url 'login' %}">Log in</a></span>
+		</div>
+	</div>
+{% endblock content %}

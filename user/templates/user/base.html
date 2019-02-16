@@ -6,15 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'user/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>Attendance System</title>
   </head>
   <body>
+    {% if user.is_authenticated %}
+      <div id="sideNav" class="side-nav">
+          <a href="javascript:void(0)" id="close" class="close-btn">&times;</a>
+          <a href="{% url 'home' %}">Homepage</a>
+          <a href="#">submit attendance</a>
+          <a href="#">student details</a>
+          <a href="#">update data</a>
+          <a href="{% url 'logout' %}">logout</a>
+      </div>
+      <a href="javascript:void(0)" class="open-side-nav" id="open"><i class="fas fa-bars"></i></a>
+    {% endif %}
     {% block content %}
     {% endblock content %}
 
-    <script src="user/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="user/js/popper.min.js"></script>
-    <script src="user/js/bootstrap.min.js"></script>
+    <script src="{% static 'user/js/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'user/js/popper.min.js' %}"></script>
+    <script src="{% static 'user/js/bootstrap.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'user/js/script.js' %}"></script>
   </body>
 </html>

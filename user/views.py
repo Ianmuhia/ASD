@@ -1,9 +1,21 @@
-from django.shortcuts import render
-
-
-def logIn(request):
-    return render(request, 'user/login.html')
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import UserRegisterForm
 
 
 def register(request):
-    return render(request, 'user/regsiter.html')
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, '{username}\'s Account is Successfully Created')
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
+
+    return render(request, 'user/register.html', {'form': form})

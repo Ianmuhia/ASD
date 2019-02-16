@@ -1,3 +1,7 @@
+body{
+	font-family: 'Poppins', sans-serif;
+	color: #333333;
+}
 .form-background{
 	background: #12c2e9;  /* fallback for old browsers */
 	background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
@@ -8,16 +12,205 @@
 	justify-content: center;
 }
 
+.side-nav{
+	background-color: #333;
+	padding-top:5rem;
+	position: fixed;
+	top:0;
+	left:0;
+	height: 100%;
+	width: 0px;
+	z-index:1;
+	overflow-x: hidden;
+	transition: 0.5s;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	}
+
+a.open-side-nav{
+	position: fixed;
+	top:2rem;
+	left:2rem;
+	font-size: 2rem;
+	color: #b7b6b6;
+	transition: 0.3s;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-o-transition: 0.3s;
+}
+
+.side-nav a{
+	display: block;
+	color:#b7b6b6;
+	font-size: 1.5rem;
+	padding:0.7rem 3rem;
+	text-transform: capitalize;
+	transition: 0.3s;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-o-transition: 0.3s;
+}
+
+.side-nav a.close-btn{
+	float: right;
+	padding:0 2rem;
+	margin-top: -4rem;
+	font-size: 2.5rem;
+}
+
+.side-nav a:hover,a.open-side-nav:hover{
+	text-decoration: none;
+	color: white;
+}
+
 .main-form{
 	background: white;
 	border-radius: 10px;
 	padding: 3rem;
+	width: 420px;
 }
 
 .main-form .header{
-	color:#333333;
 	text-align: center;
 	margin:2rem auto;
-	font-family: 'Poppins', sans-serif;
 	font-weight: bold;
+}
+
+.main-form label {
+	color:#333333;
+	margin-top:1rem;
+	font-size:0.9rem;
+	transition: 0.3s;
+}
+
+.main-form input{
+	width: 100%;
+	border:none;
+	border-bottom: 2px solid #33333380;
+}
+
+.main-form .form-button{
+	border-radius: 20px;
+	width: 100%;
+	background-color: transparent;
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	padding: 0.3rem;
+	margin-top:1rem;
+	overflow: hidden;
+	position: relative;
+	color: white;
+	border:none;
+	cursor: pointer;
+	font-weight: 500;
+	margin-bottom: 2rem;
+}
+
+.form-button span{
+	position: relative;
+	z-index: 1;
+}
+
+.main-form .form-button:before{
+	content: '';
+	height: 100%;
+	width: 200%;
+	margin-left:-100%;
+	position: absolute;
+	top:0;left:0;right: 0;bottom:0;
+	z-index:0;
+	background: #12c2e9;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #12c2e9,#c471ed,  #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right,  #12c2e9, #c471ed, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	filter:contrast(150%);
+	-webkit-filter:contrast(150%);
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-o-transition: 0.3s;
+	}
+
+.main-form .form-button:hover:before{
+	margin-left: 0;
+}
+
+.main-form .errorlist li,.main-form .nonfield li{
+	list-style: none;
+	font-size: 0.9rem;
+}
+
+.home{
+	min-height: 100vh;
+	background-image: url('images/study.jpg');
+	background-size: cover;
+	overflow-y: hidden;
+}
+
+.home .container{
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.home-card{
+	padding: 3rem;
+	background-color: white;
+	border-radius: 10px;
+	margin-right: 5rem;
+	cursor: pointer;
+	height: 300px;
+	width: 300px;
+	text-align: center;
+	margin-bottom: -150vh;
+	transition:0.5s;
+	-webkit-transition:0.5s;
+	-moz-transition:0.5s;
+	-o-transition:0.5s;
+	animation-name: fly-in;
+	animation-duration: 1.5s;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes fly-in{
+	0%{
+		margin-bottom: -150vh;
+	}
+	60%{
+		margin-bottom: 10vh;
+	}
+	100%{
+		margin-bottom: 0;
+	}
+}
+.home-card:last-of-type{
+	margin-right: 0;
+}
+
+.home-card:nth-child(1){
+	color:  #02c39a;
+}
+.home-card:nth-child(2){
+	color:  #41C5D3;
+	animation-delay: 0.5s;
+}
+.home-card:nth-child(3){
+	color:  #FF4B4B;
+	animation-delay: 1s;
+}
+
+.home-card:hover,.home-card:focus{
+	box-shadow: 0px 10px 20px  #333333;
+	transform: scale(1.05);
+	-webkit-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	-o-transform: scale(1.05);
+}
+.home-card h5{
+	margin: 1rem auto;
+}
+
+.home-card i.fas{
+	font-size: 10rem;
 }

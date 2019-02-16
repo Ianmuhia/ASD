@@ -2,10 +2,27 @@
 
 {% block content %}
 	<div class="container-fluid form-background">
-		<div class="main-form">
-			<form>
-				<h1 class="header">Login</h1>
+		<div class="main-form" >
+			<form method="POST">
+				<h1 class="header">Log In</h1>
+				{% for non_error in form.non_field_errors %}
+			           <div class="row">
+			             <div class="alert alert-danger">{{non_error}}</div>
+			           </div>
+	          	{% endfor %}
+				{% csrf_token %}
+				{% for field in form %}
+					{{ field.label_tag }}<br/>
+					{{ field }}<br/>
+					{% for error in field.errors %}
+			           <div class="row">
+			             <div class="alert alert-danger">{{error}}</div>
+			           </div>
+		          	{% endfor %}
+				{% endfor %}
+				<button type="submit" class="form-button"><span>Log In</span></button>
 			</form>
+			<span class="text-muted">Don't Have an Account?<a class="ml-2" href="{% url 'register' %}">Sign up</a></span>
 		</div>
 	</div>
 {% endblock content %}
