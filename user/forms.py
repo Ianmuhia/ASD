@@ -4,9 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserRegisterForm(UserCreationForm):
-    # def __init__(self, *args, **kwargs):
-    #     kwargs.setdefault('label_suffix', '')
-    #     super(UserRegisterForm, self).__init__(*args, **kwargs)
 
     email = forms.EmailField()
 

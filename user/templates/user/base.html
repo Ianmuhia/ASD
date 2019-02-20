@@ -10,14 +10,18 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>Attendance System</title>
   </head>
-  <body>
-    {% if user.is_authenticated %}
+  <body class="home">
+    {% if user.is_staff %}
       <div id="sideNav" class="side-nav">
           <a href="javascript:void(0)" id="close" class="close-btn">&times;</a>
           <a href="{% url 'home' %}">Homepage</a>
           <a href="#">submit attendance</a>
           <a href="#">student details</a>
-          <a href="#">update data</a>
+          {% if user.is_staff %}
+            <a href="{% url 'data' %}">Administration</a>
+            <a class="ml-4" href="{% url 'subject' %}"> - Subject</a>
+            <a class="ml-4" href="{% url 'course' %}"> - Course</a>
+          {% endif %}
           <a href="{% url 'logout' %}">logout</a>
       </div>
       <a href="javascript:void(0)" class="open-side-nav" id="open"><i class="fas fa-bars"></i></a>
@@ -28,7 +32,6 @@
     <script src="{% static 'user/js/jquery.slim.min.js' %}"></script>
     <script src="{% static 'user/js/popper.min.js' %}"></script>
     <script src="{% static 'user/js/bootstrap.min.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{% static 'user/js/script.js' %}"></script>
   </body>
 </html>

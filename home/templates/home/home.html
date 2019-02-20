@@ -1,10 +1,19 @@
 {% extends 'user/base.html' %}
 {% block content %}
 	<div class="container-fluid home">
-		<div class="container">
-			<div class="home-card"><i class="fas fa-user-check"></i><h5>Submit Attendance</h5></div>
-			<div class="home-card"><i class="fas fa-user-graduate"></i><h5>Student's Details</h5></div>
-			<div class="home-card"><i class="fas fa-user-edit"></i><h5>Update Data</h5></div>
+		<h1 class="heading">HomePage</h1>
+		<div class="container card-container">
+			<a  class="home-card" href="{% url 'data' %}">
+				<div><i class="fas fa-user-check"></i><h5>Submit Attendance</h5></div>
+			</a>
+			<a  class="home-card" href="{% url 'data' %}">
+				<div><i class="fas fa-user-graduate"></i><h5>Student's Details</h5></div>
+			</a>
+			{% if user.is_staff %}
+				<a  class="home-card" href="{% url 'data' %}">
+					<div><i class="fas fa-user-edit"></i><h5>Add or Delete Data</h5></div>
+				</a>
+			{% endif %}
 		</div>
 	</div>
 {% endblock content %}

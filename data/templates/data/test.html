@@ -1,0 +1,25 @@
+{% extends 'user/base.html'  %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading my-5 py-5" style="position:static">{{pageName}}</h1>kdhfeunvljdsnjslnvlndln
+</div>
+	<div class="container model-view">
+		<form method="POST">
+			{% csrf_token %}
+			{% for field in form %}
+				{{ field.label_tag }}
+				<div class="input-group mb-3">
+				  	<input type="text" class="form-control" id="{{field.id_for_label}}" placeholder="{{field.label}} Name" name="{{field.html_name}}" maxlength="250" value="{{ field.value|default_if_none:"" }}"required="">
+				  	<div class="input-group-append">
+				    	<button class="btn btn-success" type="submit">Save {{field.label}}</button>
+				    	{% if page == 'subject' %}
+				    		<a href="{% url 'subject' %}" class="btn btn-danger" type="button">Cancel</a>
+			    		{% else %}
+			    			<a href="{% url 'course' %}" class="btn btn-danger" type="button">Cancel</a>
+		    			{% endif %}
+				  	</div>
+				</div>
+			{% endfor %}
+		</form>
+	</div>
+{% endblock %}

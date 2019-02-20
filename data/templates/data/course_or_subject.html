@@ -1,0 +1,34 @@
+{% extends 'user/base.html'  %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading my-5 py-5" style="position:static">{{pageName}}</h1>
+</div>
+	<div class="container model-view">
+
+		{% if pageName == 'subject' %}
+			<div class="text-right"><a class="btn btn-md btn-outline-primary add-new my-2" href="{% url 'subject-create' %}">Add New {{pageName}}</a></div>
+
+			<ul>
+			{% for subject in subjects%}
+				<li class="list-view"><a class="update" href="{% url 'subject-update' subject.pk %}">{{subject}}</a><a class="dlt"	 href="{% url 'subject-delete' subject.pk %}"><i class="fas fa-trash-alt"></i></a></li>
+			{% endfor %}
+
+			</ul>
+
+		{% elif pageName == 'course' %}
+
+			<div class="text-right"><a class="btn btn-md btn-outline-primary add-new my-2" href="{% url 'course-create' %}">Add New {{pageName}}</a></div>
+			<ul>
+
+			{% for course in courses%}
+
+				<li class="list-view"><a class="update" href="{% url 'course-update' course.pk %}">{{course}}</a><a class="dlt" 	href="{% url 'course-delete' course.pk %}"><i class="fas fa-trash-alt"></i></a></li>
+
+			{% endfor %}
+
+			</ul>
+
+		{% endif %}
+
+	</div>
+{% endblock %}
