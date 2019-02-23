@@ -3,16 +3,20 @@
 	<div class="container-fluid home">
 		<h1 class="heading">HomePage</h1>
 		<div class="container card-container">
-			<a  class="home-card" href="{% url 'data' %}">
-				<div><i class="fas fa-user-check"></i><h5>Submit Attendance</h5></div>
+			<a  class="home-card col-sm" href="#">
+				<div><i class="far fa-calendar-alt"></i><h5>Schedule</h5></div>
 			</a>
-			<a  class="home-card" href="{% url 'data' %}">
+			<a  class="home-card col-sm" href="{% url 'student' %}">
 				<div><i class="fas fa-user-graduate"></i><h5>Student's Details</h5></div>
 			</a>
 			{% if user.is_staff %}
-				<a  class="home-card" href="{% url 'data' %}">
-					<div><i class="fas fa-user-edit"></i><h5>Add or Delete Data</h5></div>
+				<a class="home-card col-sm" href="{% url 'subject' %}">
+					<i class="fas fa-book-open"></i><h5>Subject</h5>
 				</a>
+				<a class="home-card col-sm" href="{% url 'course' %}">
+					<i class="fas fa-chalkboard-teacher"></i><h5>Course</h5>
+				</a>
+
 			{% endif %}
 		</div>
 	</div>

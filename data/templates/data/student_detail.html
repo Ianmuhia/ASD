@@ -1,0 +1,48 @@
+{% extends 'user/base.html'  %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading">{{pageName}}</h1>
+</div>
+	<div class="container model-view">
+				<div class="d-flex">
+			<a class="btn btn-md btn-secondary mr-auto add-new my-2" href="{% url 'student' %}"><i class="fas fa-chevron-left mr-1"></i> Back</a>
+		</div>
+
+		<table class="table details">
+		    <tbody>
+		      	<tr>
+			        <td>Roll no</td>
+			        <td>{{student.roll_no}}</td>
+			        <td rowspan="3"><img src="{{student.image.url}}"></td>
+		      	</tr>
+	    	  	<tr>
+			        <td>Name</td>
+			        <td>{{student.name}}</td>
+			        <td></td>
+		      	</tr>
+		      	<tr>
+			        <td>Course</td>
+			        <td>{{student.course}}</td>
+			        <td></td>
+		      	</tr>
+		      	<tr>
+			        <td>Semester</td>
+			        <td>{{student.sem}}</td>
+			        <td></td>
+		      	</tr>
+		      	<tr>
+			        <td>Subjects</td>
+			        <td colspan="2">
+			        	{%for subject in student.subject.all %}
+				        {{subject}}{{ forloop.last|yesno:",&#44;"|safe }}
+				        {% endfor %}
+			    	</td>
+		      	</tr>
+		    </tbody>
+	  	</table>
+	  	{% if user.is_staff %}
+		  	<a class="btn btn-md btn-primary add-new my-2" type="button" href="{% url 'student-update' student.pk %}">Update</a>
+		  	<a class="btn btn-md btn-danger add-new my-2" type="button" href="{% url 'student-delete' student.pk %}">Delete</a>
+		{% endif %}
+	</div>
+{% endblock %}

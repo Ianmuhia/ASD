@@ -8,19 +8,19 @@
     <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <title>Attendance System</title>
   </head>
   <body class="home">
-    {% if user.is_staff %}
+    {% if user.is_authenticated %}
       <div id="sideNav" class="side-nav">
           <a href="javascript:void(0)" id="close" class="close-btn">&times;</a>
           <a href="{% url 'home' %}">Homepage</a>
-          <a href="#">submit attendance</a>
-          <a href="#">student details</a>
+          <a href="#">Schedule</a>
+          <a href="{% url 'student' %}">student details</a>
           {% if user.is_staff %}
-            <a href="{% url 'data' %}">Administration</a>
-            <a class="ml-4" href="{% url 'subject' %}"> - Subject</a>
-            <a class="ml-4" href="{% url 'course' %}"> - Course</a>
+            <a href="{% url 'subject' %}">Subject</a>
+            <a href="{% url 'course' %}">Course</a>
           {% endif %}
           <a href="{% url 'logout' %}">logout</a>
       </div>
@@ -30,6 +30,7 @@
     {% endblock content %}
 
     <script src="{% static 'user/js/jquery.slim.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="{% static 'user/js/popper.min.js' %}"></script>
     <script src="{% static 'user/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'user/js/script.js' %}"></script>

@@ -1,18 +1,9 @@
-from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from django.views.generic.edit import FormView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
-from .forms import CourseForm, SubjectForm
-from .models import Course, Subject
-
-
-@method_decorator(staff_member_required, name='dispatch')
-class DataView(TemplateView):
-                                        # To Display Admin Page
-    template_name = 'data/data.html'
+from .models import Course, Subject, Student
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -38,7 +29,7 @@ class SubjectCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(SubjectCreateView, self).get_context_data(**kwargs)
-        context['pageName'] = 'Create Subject'
+        context['pageName'] = 'Add New Subject'
         context['page'] = "subject"
         return context
 
@@ -66,13 +57,14 @@ class SubjectDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super(SubjectDeleteView, self).get_context_data(**kwargs)
-        context['pageName'] = 'Create Subject'
+        context['pageName'] = 'Delete Subject'
         context['page'] = "subject"
         return context
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class CourseView(ListView):
+                            # To List Courses
     model = Course
     template_name = 'data/course_or_subject.html'
     context_object_name = 'courses'
@@ -86,9 +78,9 @@ class CourseView(ListView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class CourseCreateView(CreateView):
+                                    # To Create New Course
     model = Course
     template_name = 'data/course_or_subject_form.html'
-    fields = ['course']
 
     def get_context_data(self, **kwargs):
         context = super(CourseCreateView, self).get_context_data(**kwargs)
@@ -99,6 +91,7 @@ class CourseCreateView(CreateView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class CourseUpdateView(UpdateView):
+                                    # To Update Course
     model = Course
     template_name = 'data/course_or_subject_form.html'
     fields = ['course']
@@ -112,6 +105,7 @@ class CourseUpdateView(UpdateView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class CourseDeleteView(DeleteView):
+                                    # To Delete Course
     model = Course
     template_name = 'data/course_or_subject_confirm_delete.html'
     success_url = reverse_lazy('course')
@@ -120,4 +114,62 @@ class CourseDeleteView(DeleteView):
         context = super(CourseDeleteView, self).get_context_data(**kwargs)
         context['pageName'] = 'Delete Course'
         context['page'] = "course"
+        return context
+
+
+class StudentListView(LoginRequiredMixin, ListView):
+                                # To List Students
+    model = Student
+    template_name = 'data/student.html'
+    context_object_name = 'students'
+    ordering = ['roll_no']
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        context['pageName'] = 'Student'
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class StudentDetailView(DetailView):
+                                    # To Display Student Details
+    model = Student
+    context_object_name = 'student'
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentDetailView, self).get_context_data(**kwargs)
+        context['pageName'] = 'student details'
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class StudentCreateView(CreateView):
+    model = Student
+    fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentCreateView, self).get_context_data(**kwargs)
+        context['pageName'] = 'Add new student'
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class StudentUpdateView(UpdateView):
+    model = Student
+    fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentUpdateView, self).get_context_data(**kwargs)
+        context['pageName'] = 'Add new student'
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class StudentDeleteView(DeleteView):
+    model = Student
+    success_url = reverse_lazy('student')
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentDeleteView, self).get_context_data(**kwargs)
+        context['pageName'] = 'delete student'
         return context

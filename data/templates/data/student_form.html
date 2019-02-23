@@ -1,0 +1,49 @@
+{% extends 'user/base.html'  %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading">{{pageName}}</h1>
+</div>
+	<div class="container model-view">
+		<form method="POST" enctype="multipart/form-data">
+
+			{% csrf_token %}
+			{% for field in form %}
+				{% for error in field.errors %}
+					<span class="text-danger ml-5">{{error}}</span>
+				{% endfor %}
+				{% if field.field.widget.input_type == "select" %}
+					<div>
+						  <div class="input-group mb-3">
+						    <div class="input-group-prepend">
+							      <span class="input-group-text">{{field.label}}</span>
+					   	 	</div>
+							    {{field|add_class:"custom-select"}}
+						  </div>
+					</div>
+				{% elif field.field.widget.input_type == "file" %}
+					  <div class="input-group mb-3">
+					    <div class="input-group-prepend">
+					      <span class="input-group-text">{{field.label}}</span>
+					    </div>
+				     	<div class="custom-file">
+						    <input type="file" class="custom-file-input" value="{{student.image.url}}" name="{{field.html_name}}">
+					     	<label class="custom-file-label" for="customFile">{{student.image}}</label>
+					 	</div>
+					  </div>
+			  	{% else%}
+					<div>
+					  	<div class="input-group mb-3">
+				    		<div class="input-group-prepend">
+						      	<span class="input-group-text">{{field.label}}</span>
+				   	 		</div>
+						    {{field|add_class:"form-control"}}
+					  	</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+			<button class="btn btn-success m-2" type="submit">Save</button>
+			<a href="{% url 'student' %}" type="button" class="btn btn-danger m-2">Cancel</a>
+		</form>
+	</div>
+{% endblock %}
