@@ -5,7 +5,7 @@
 </div>
 	<div class="container model-view">
 				<div class="d-flex">
-			<a class="btn btn-md btn-secondary mr-auto add-new my-2" href="{% url 'student' %}"><i class="fas fa-chevron-left mr-1"></i> Back</a>
+			<a class="btn btn-md btn-dark mr-auto add-new my-2" href="{% url 'student' %}"><i class="fas fa-chevron-left mr-1"></i> Back</a>
 		</div>
 
 		<table class="table details">
@@ -36,6 +36,14 @@
 			        	{%for subject in student.subject.all %}
 				        {{subject}}{{ forloop.last|yesno:",&#44;"|safe }}
 				        {% endfor %}
+			    	</td>
+		      	</tr>
+		      	<tr>
+			        <td>Attendance</td>
+			        <td colspan="2">
+			        	<span class="text-success font-weight-bold">
+		        		{{present}}
+			        	</span>
 			    	</td>
 		      	</tr>
 		    </tbody>

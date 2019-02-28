@@ -266,7 +266,6 @@ a.open-side-nav{
 	color: #333;
 	display:inline-block;
 	padding: 0.5rem;
-	text-transform: capitalize;
 	width: 97%;
 	text-decoration: none;
 	font-weight: 500;
@@ -335,4 +334,24 @@ table.details img{
 	width: 10vw;
 	border-radius: 1rem;
 	border:5px solid white;
+}
+
+/* Days selector */
+.weekDays-selector input {
+  display: none!important;
+}
+
+.weekDays-selector input[type=checkbox] + label {
+  display: inline-block;
+  border-radius: 6px;
+  background: silver;
+  padding: 0.3rem 1rem;
+  margin-right: 3px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.weekDays-selector input[type=checkbox]:checked + label {
+  background: #007bff;
+  color: #ffffff;
 }

@@ -7,14 +7,15 @@
 		<div class="d-flex">
 			<a class="btn btn-md btn-dark mr-auto add-new my-2" href="{% url 'home' %}"><i class="fas fa-home  mr-1"></i> home</a>
 			{% if user.is_staff %}
-				<a class="btn btn-md btn-primary add-new my-2" href="{% url 'student-create' %}">+ Add New {{pageName}}</a>
+				<a class="btn btn-md btn-primary add-new my-2" href="{% url 'schedule-create' %}">+ Add New {{pageName}}</a>
 			{% endif %}
 		</div>
 
 		<ul>
-			{% for student in students %}
-				<li class="list-view"><a class="update" href="{% url 'student-detail' student.pk %}"><span class="list-no"> {{student.roll_no}}</span> {{student.name}}</a></li>
+			{% for schedule in schedules %}
+				<li class="list-view"><a class="update" href="{% url 'schedule-detail' schedule.pk %}"><span class="list-no"> {{schedule}}</span> {{schedule.subject}}</a></li>
 			{% endfor %}
+			{{author}}
 		</ul>
 	</div>
 {% endblock %}

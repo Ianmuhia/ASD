@@ -3,7 +3,7 @@
 	<div class="container-fluid home">
 		<h1 class="heading">HomePage</h1>
 		<div class="container card-container">
-			<a  class="home-card col-sm" href="#">
+			<a  class="home-card col-sm" href="{% url 'schedule' %}">
 				<div><i class="far fa-calendar-alt"></i><h5>Schedule</h5></div>
 			</a>
 			<a  class="home-card col-sm" href="{% url 'student' %}">
@@ -16,7 +16,6 @@
 				<a class="home-card col-sm" href="{% url 'course' %}">
 					<i class="fas fa-chalkboard-teacher"></i><h5>Course</h5>
 				</a>
-
 			{% endif %}
 		</div>
 	</div>

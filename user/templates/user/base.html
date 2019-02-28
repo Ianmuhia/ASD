@@ -16,7 +16,7 @@
       <div id="sideNav" class="side-nav">
           <a href="javascript:void(0)" id="close" class="close-btn">&times;</a>
           <a href="{% url 'home' %}">Homepage</a>
-          <a href="#">Schedule</a>
+          <a href="{% url 'schedule' %}">Schedule</a>
           <a href="{% url 'student' %}">student details</a>
           {% if user.is_staff %}
             <a href="{% url 'subject' %}">Subject</a>

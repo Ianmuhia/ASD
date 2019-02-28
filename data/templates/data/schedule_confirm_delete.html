@@ -1,0 +1,17 @@
+{% extends 'user/base.html'  %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading">{{pageName}}</h1>
+</div>
+	<div class="container model-view">
+		<form method="POST">
+
+			{% csrf_token %}
+				<h2 class="my-5">Are You Sure You Want To Delete Schedule "Teacher : {{object.teacher}}, Subject : {{object.subject}}" ?</h2>
+				<div class="input-group mb-3">
+			    	<button class="btn btn-danger m-2" type="submit">Yes, Delete</button>
+		    		<a href="{% url 'schedule-detail' schedule.pk %}" class="btn btn-success m-2" type="button">Cancel</a>
+	    		</div>
+		</form>
+	</div>
+{% endblock %}

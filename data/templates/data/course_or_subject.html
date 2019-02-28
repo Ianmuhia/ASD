@@ -1,16 +1,29 @@
 {% extends 'user/base.html'  %}
+{% load widget_tweaks %}
 {% block content %}
 <div class="container-fluid">
 	<h1 class="heading">{{pageName}}</h1>
 </div>
 	<div class="container model-view">
 		<div class="d-flex">
-			<a class="btn btn-md btn-secondary mr-auto add-new my-2" href="{% url 'home' %}"><i class="fas fa-chevron-left mr-1"></i> Back</a>
+			<a class="btn btn-md btn-dark mr-auto add-new my-2" href="{% url 'home' %}"><i class="fas fa-home  mr-1"></i> home</a>
 		{% if pageName == 'subject' %}
 			
-				<a class="btn btn-md btn-primary ml-auto add-new my-2" href="{% url 'subject-create' %}">+ Add New {{pageName}}</a>
+				<a class="btn btn-md btn-success ml-auto add-new my-2" href="{% url 'subject-create' %}">+ Add New {{pageName}}</a>
 			</div>
-
+<!-- search form -->
+			<form  method="get" novalidate="">
+				{% for error in field.errors %}
+					<span class="text-danger ml-5">{{error}}</span>
+				{% endfor %}
+				<div class="input-group my-3">
+				  	{% render_field form.search type="search" placeholder="Search Here" class="form-control" %}
+				  	<div class="input-group-append">
+					    <button class="btn btn-primary" type="submit" name="search-subject">Search</button>
+				  	</div>
+				</div>
+			</form>
+			
 			<ul>
 			{% for subject in subjects%}
 				<li class="list-view"><a class="update" href="{% url 'subject-update' subject.pk %}">{{subject}}</a><a class="dlt"	 href="{% url 'subject-delete' subject.pk %}"><i class="fas fa-trash-alt"></i></a></li>
@@ -21,6 +34,16 @@
 		{% elif pageName == 'course' %}
 
 			<a class="btn btn-md btn-primary add-new my-2" href="{% url 'course-create' %}">+ Add New {{pageName}}</a></div>
+<!-- search form -->
+			<form  method="get"  novalidate="">
+				<div class="input-group my-3">
+				  	{% render_field form.search type="search" placeholder="Search Here" class="form-control" %}
+				  	<div class="input-group-append">
+					    <button class="btn btn-primary" type="submit" name="search-course">Search</button>
+				  	</div>
+				</div>
+			</form>
+			
 			<ul>
 
 			{% for course in courses%}
