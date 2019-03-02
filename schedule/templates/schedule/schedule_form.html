@@ -1,0 +1,61 @@
+{% extends 'user/base.html'  %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading">{{pageName}}</h1>
+</div>
+	<div class="container model-view">
+		<form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+				<div class="input-group mb-3">
+				    <div class="input-group-prepend">
+					      <span class="input-group-text">{{form.lecture_no.label}}</span>
+			   	 	</div>
+					    {{form.lecture_no|add_class:"form-control"}}
+				  </div>
+
+				  <div class="input-group mb-3">
+				    <div class="input-group-prepend">
+					      <span class="input-group-text">{{form.course.label}}</span>
+			   	 	</div>
+					    {{form.course|add_class:"custom-select"}}
+				  </div>
+
+				  <div class="input-group mb-3">
+				    <div class="input-group-prepend">
+					      <span class="input-group-text">{{form.sem.label}}</span>
+			   	 	</div>
+					    {{form.sem|add_class:"custom-select"}}
+				  </div>
+
+				  <div class="input-group mb-3">
+				    <div class="input-group-prepend">
+					      <span class="input-group-text">{{form.subject.label}}</span>
+			   	 	</div>
+					    {{form.subject|add_class:"custom-select"}}
+				  </div>
+
+				  {% if user.is_staff %}
+					  <div class="input-group mb-3">
+					    <div class="input-group-prepend">
+						      <span class="input-group-text">{{form.teacher.label}}</span>
+				   	 	</div>
+						    {{form.teacher|add_class:"custom-select"}}
+					  </div>
+				  {% endif %}
+				  <div class="input-group mb-3">
+				    <div class="input-group-prepend">
+					      <span class="input-group-text">{{form.day.label}}</span>
+			   	 	</div>
+					    <select name="{{form.day.html_name}}" class="custom-select" multiple="" required="">
+					    	{% for value,text in form.fields.day.choices %}
+					    		<option value="{{value}}" {% if value in day_list %} selected="" {% endif %}> {{day_list.forloop.counter0}}{{text}}</option>
+					    	{% endfor %}
+					    </select>
+				  </div>
+
+			<button class="btn btn-success m-2" type="submit">Save</button>
+			<a href="{% url 'schedule' %}" type="button" class="btn btn-danger m-2">Cancel</a>
+		</form>
+	</div>
+{% endblock %}

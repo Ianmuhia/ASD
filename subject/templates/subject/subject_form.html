@@ -1,0 +1,27 @@
+{% extends 'user/base.html'  %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading">{{pageName}}</h1>
+</div>
+	<div class="container model-view">
+		<form method="POST">
+			{% csrf_token %}
+			{% for field in form %}
+
+				{% for error in field.errors %}
+					<span class="text-danger ml-5">{{error}}</span><br>
+				{% endfor %}
+
+				{{ field.label_tag }}
+				<div class="input-group mb-3">
+					{{form.subject|add_class:"form-control"}}
+				  	<div class="input-group-append">
+				    	<button class="btn btn-success" type="submit">Save</button>
+			    		<a href="{% url 'subject' %}" class="btn btn-danger" type="button">Cancel</a>
+				  	</div>
+				</div>
+			{% endfor %}
+		</form>
+	</div>
+{% endblock %}

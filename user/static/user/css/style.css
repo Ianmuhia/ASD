@@ -20,7 +20,7 @@ body{
 	left:0;
 	height: 100%;
 	width: 0px;
-	z-index:1;
+	z-index:1000;
 	overflow-x: hidden;
 	transition: 0.5s;
 	-webkit-transition: 0.5s;
@@ -28,12 +28,17 @@ body{
 	-o-transition: 0.5s;
 	}
 
+.side-nav .user{
+	cursor: none;
+}
 a.open-side-nav{
 	position: fixed;
-	top:2rem;
-	left:2rem;
-	font-size: 2rem;
-	color: #b7b6b6;
+	top:50%;
+	left:3rem;
+	font-size: 5rem;
+	color: white;
+	display: inline-block;
+	transform: translateY(-50%);
 	transition: 0.3s;
 	-webkit-transition: 0.3s;
 	-moz-transition: 0.3s;
@@ -165,6 +170,11 @@ a.open-side-nav{
 	to{opacity: 1;}
 }
 
+.home h3.heading{
+	font-size: 3vw;
+	color: #333;
+	height: 10VH;
+}
 .home .card-container{
 	height: 70vh;
 	display: flex;
@@ -180,9 +190,10 @@ a.open-side-nav{
 	border-radius: 10px;
 	display: inline-block;
 	cursor: pointer;
-	max-width:17vw;
-	max-height:17vw;
+	max-width:18vw;
+	max-height:18vw;
 	text-align: center;
+	align-items: center;
 	transform: translateY(60vh);
 	transition:0.3s;
 	-webkit-transition:0.3s;
@@ -236,7 +247,7 @@ a.open-side-nav{
 
 .home-card h5{
 	margin: 1vw auto;
-	font-size: 1.1vw;
+	font-size: 1.3vw;
 }
 
 .home-card i{
@@ -336,22 +347,6 @@ table.details img{
 	border:5px solid white;
 }
 
-/* Days selector */
-.weekDays-selector input {
-  display: none!important;
-}
-
-.weekDays-selector input[type=checkbox] + label {
-  display: inline-block;
-  border-radius: 6px;
-  background: silver;
-  padding: 0.3rem 1rem;
-  margin-right: 3px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.weekDays-selector input[type=checkbox]:checked + label {
-  background: #007bff;
-  color: #ffffff;
+table .custom-control-label::before{
+	background: #fff;
 }

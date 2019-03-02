@@ -23,8 +23,10 @@
             <a href="{% url 'course' %}">Course</a>
           {% endif %}
           <a href="{% url 'logout' %}">logout</a>
+          <a href="javascript:void(0)" class="user">Logged in as: </a>
+          <a href="javascript:void(0)" class="ml-5 user">{{user.username}}</a>
       </div>
-      <a href="javascript:void(0)" class="open-side-nav" id="open"><i class="fas fa-bars"></i></a>
+      <a href="javascript:void(0)" class="open-side-nav" id="open"><i class="fas fa-angle-right"></i></a>
     {% endif %}
     {% block content %}
     {% endblock content %}

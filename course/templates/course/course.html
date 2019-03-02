@@ -1,0 +1,40 @@
+{% extends 'user/base.html'  %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container-fluid">
+	<h1 class="heading">{{pageName}}</h1>
+</div>
+<div class="container model-view">
+	<div class="d-flex">
+		<a class="btn btn-md btn-dark mr-auto add-new my-2" href="{% url 'home' %}"><i class="fas fa-home  mr-1"></i> home</a>
+		<a class="btn btn-md btn-primary add-new my-2" href="{% url 'course-create' %}">+ Add New {{pageName}}</a>
+	</div>
+									<!-- search form -->
+	<form  method="get">
+		<div class="input-group my-3">
+		  	{% render_field form.search type="search" placeholder="Search Here" class="form-control" value=request.GET.search %}
+		  	<div class="input-group-append">
+			    <button class="btn btn-primary" type="submit">Search</button>
+		  	</div>
+		</div>
+	</form>
+
+	{% if query %}
+		<h2 class="m-3 font-weight-bold">Search Results For {{query}} :</h2>
+	{% endif %}			
+	
+	<ul>
+
+	{% for course in courses%}
+
+		<li class="list-view">
+			<a class="update" href="{% url 'course-update' course.pk %}">{{course}}</a>
+			<a class="dlt" href="{% url 'course-delete' course.pk %}"><i class="fas fa-trash-alt"></i></a>
+		</li>
+
+	{% endfor %}
+
+	</ul>
+
+</div>
+{% endblock %}
