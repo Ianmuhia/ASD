@@ -2,11 +2,73 @@ from django.db import models
 from django.urls import reverse
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
+import io
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
 import datetime
 from subject.models import Subject
 from course.models import Course
 from student.models import Student
 from student.models import sem
+
+
+def attendanceCalculator(queryset):  # For calculating attendance details of student
+    pDays = 0
+    detailList = []
+    for query in queryset:
+        if query.mark:
+            pDays += 1
+            detailList.append({"attend": "Present", "date": query.lecture_date})
+        else:
+            detailList.append({"attend": "Absent ", "date": query.lecture_date})
+
+    sName = Student.objects.get(id=queryset.first().student.id).name
+    tDays = queryset.count()
+    if pDays:
+        attendancePercent = format((pDays * 100 / tDays), '0.2f') + "%"
+    else:
+        attendancePercent = "This student didn't attend class till now."
+    data = {'name': sName, 'presentDays': pDays, 'totalDays': tDays, 'attendancePercent': attendancePercent, 'detail': detailList}
+    return data
+
+
+def pdfGen(queryset):  # For Genrating Pdf file of student attendance
+
+    attendance = queryset
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer)
+    width, height = A4
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="attendance-of-{attendance["name"]}.pdf"'
+    name = f'Name of Student : {attendance["name"]}'
+    total = f'Total No. of Days : {attendance["totalDays"]}'
+    presentDays = f'No. of Days Present : {attendance["presentDays"]}'
+    percent = f'Present Percentage : {attendance["attendancePercent"]}'
+
+    textobject = p.beginText(50, height - 50)  # begin from top left
+    textobject.setFont("Helvetica", 12)
+    textobject.textLine(name)
+    textobject.textLine(total)
+    textobject.textLine(presentDays)
+    textobject.textLine(percent)
+    textobject.textLine('=' * 30)
+    textobject.textLine("Attended | Lecture Date")
+
+    for value in attendance['detail']:
+        text = f'{value["attend"]}   |   {value["date"]}'
+        textobject.textLine(text)
+        text = ""
+
+    p.drawText(textobject)
+
+    p.showPage()
+    p.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    return response
 
 
 class Schedule(models.Model):

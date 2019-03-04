@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="container-fluid">
-	<h1 class="heading">{{pageName}}</h1>
+	<h1 class="heading">Check Attendance</h1>
 </div>
 	<div class="container model-view">
 		<div class="d-flex">
@@ -11,43 +11,45 @@
 		</div>
 		<form  method="get">
 			<div class="input-group my-3">
-			  	{% render_field form.roll_no  placeholder="Enter Roll no" class="form-control" value=request.GET.roll_no %}
-			  	{% render_field form.start_date type="date" placeholder="From Date" class="form-control" value=request.GET.start_date %}
-			  	{% render_field form.end_date type="date" placeholder="To Date" class="form-control" value=request.GET.end_date %}
+			  	{% render_field form.roll_no  placeholder="Enter Roll no" class="form-control" data-toggle="tooltip" title="Enter Roll No." value=request.GET.roll_no %}
+			  	{% render_field form.start_date type="date" placeholder="From Date" title="From Date" data-toggle="tooltip" class="form-control" value=request.GET.start_date %}
+			  	{% render_field form.end_date type="date" title="To Date" data-toggle="tooltip" class="form-control" value=request.GET.end_date %}
 			  	
 			  	 <div class="input-group-append">
 				    <button class="btn btn-primary" type="submit">Search</button>
+				    <button class="btn btn-success" type="submit" name="pdf-gen">Genrate Pdf</button>
 
 			  	</div>
 			</div>
-		</form>
-		{% if query %}
-			<h2 class="m-3 font-weight-bold">Attendance of {{query}} :</h2>
-			<p>Name of Student : {{student_name}}</p>
-			<p>Total no. of days : {{total_days}}</p>
-			<p>Days Present : {{present_days}}</p>
-			<p>Present Percentage : {{present}}</p>
-			<a href="{% url 'pdf-gen' request.GET.roll_no request.GET.start_date request.GET.end_date %}"class="btn btn-success my-3" type="submit" name="pdf-gen">Genrate Pdf</a>
-		{% endif %}
-
-
-
+		
 		{% if attendance %}
+				<!--<h2 class="m-3 font-weight-bold">Attendance of {{query}} :</h2> -->
+				<p>Name of Student : {{attendance.name}}</p>
+				<p>Total no. of days : {{attendance.totalDays}}</p>
+				<p>Days Present : {{attendance.presentDays}}</p>
+				<p>Present Percentage : {{attendance.attendancePercent}}</p>
+					
+		{% elif notFound %}
+				
+				<div class="alert bg-danger m-5">
+					<span class="text-white">{{notFound}}</span>
+				</div>
+				{# <!--href="{% url 'pdf-gen' request.GET.roll_no request.GET.start_date request.GET.end_date %}" --> #}
+		{% endif %}
+		
+	</form>
+		{% if attendance.detail %}
 			<table class="table table-hover details">
 				<thead>
 					<td>Attendance</td>
 					<td>Date</td>
 				</thead>
-				{% for detail in attendance %}
+				{% for value in attendance.detail %}
 					<tr>
 						<td>
-							{% if detail.mark %}
-								Present
-							{% else %}
-								Absent
-							{% endif %}
+							{{value.attend}}
 						</td>
-						<td>{{detail.lecture_date|date:"d F, Y"}}</td>
+						<td>{{value.date|date:"d F, Y"}}</td>
 					</tr>
 				{% endfor %}
 			</table>

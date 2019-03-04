@@ -5,7 +5,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from django.db.models import Q
 from .models import Student
-from schedule.models import Attendance
+from schedule.models import Attendance, attendanceCalculator
 from home.forms import SearchForm
 
 
@@ -40,16 +40,12 @@ class StudentDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         context['pageName'] = 'student details'
-        attendance = Attendance.objects.filter(student=self.object.id)
-        counter = 0
-        for value in attendance:
-            if value.mark:
-                counter += 1
-
-        if counter:
-            context['present'] = format((counter * 100 / attendance.count()), '0.2f') + "%"
+        queryset = Attendance.objects.filter(student=self.object.id)
+        if queryset:
+            attendance = attendanceCalculator(queryset)
+            context['present'] = attendance['attendance_percent']
         else:
-            context['present'] = "This student didn't attended class till now."
+            context['present'] = "No Attendance Data"
         return context
 
 

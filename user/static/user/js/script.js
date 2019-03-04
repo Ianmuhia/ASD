@@ -11,6 +11,10 @@ $(function(){
 
 });
 
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
 $(window).resize(function(){
     
     $('.col').each(function() {
