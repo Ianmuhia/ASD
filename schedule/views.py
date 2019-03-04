@@ -1,5 +1,5 @@
-from django.shortcuts import redirect, render
-from django.views.generic import FormView, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic import FormView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
@@ -9,7 +9,6 @@ from django.db.models import Q
 from .models import Subject, Course, Student, Schedule, Attendance, attendanceCalculator, pdfGen
 from .forms import AttendanceForm, ScheduleForm, CheckAttendanceForm
 from home.forms import SearchForm
-from django import forms
 
 
 class ScheduleListView(LoginRequiredMixin, ListView, FormView):
@@ -46,38 +45,50 @@ class ScheduleDetailView(LoginRequiredMixin, DetailView, FormView):
     template_name = 'schedule/schedule_detail.html'
     model = Schedule
     context_object_name = 'schedule'
-    form_class = AttendanceForm
-    course = Course
-    subject = Subject
-    student = Student
 
     def get_context_data(self, **kwargs):
         context = super(ScheduleDetailView, self).get_context_data(**kwargs)
         context['pageName'] = 'Submit Attendance'
-        global students_1
-        students_1 = Student.objects.filter(course__id__in=self.object.course.all(), sem=self.object.sem, subject__id__contains=self.object.subject.id).order_by('roll_no')
-        context['students'] = students_1
         return context
+
+
+class SubmitAttendanceView(View):
+    template_name = 'schedule/submit_attendance.html'  # this html file will be included in 'schedule/scheduledetail.html'
+    form_class = AttendanceForm
+
+    def get_schedule(self, value):
+        return get_object_or_404(Schedule, id=value)
+
+    def get_students(self, value):
+        schedule = self.get_schedule(value)
+        # specify Students queryset
+        students_queryset = Student.objects.filter(course__id__in=schedule.course.all(), sem=schedule.sem, subject__id__contains=schedule.subject.id).order_by('roll_no')
+        return students_queryset
+
+    def get(self, request, **kwargs):
+        form = self.form_class()
+        students = self.get_students(kwargs['pk'])
+        return render(request, self.template_name, {'form': form, 'students': students})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        self.object = self.get_object()
         if form.is_valid():
             date = form.cleaned_data['lecture_date']
-            x = 1
-            for stu in students_1:
-                lecture_v = self.model.objects.get(id=self.object.id)
-                subject_v = self.subject.objects.get(id=self.object.subject.id)
-                course_v = self.course.objects.get(id=stu.course.id)
-                student_v = self.student.objects.get(id=stu.id)
-                mark_v = request.POST.get(f'mark{x}')
-                if(not(mark_v)):
-                    mark_v = 0
-                attendance = Attendance(lecture=lecture_v, subject=subject_v, course=course_v, student=student_v, lecture_date=date, mark=mark_v)
+            schedule = self.get_schedule(kwargs['pk'])
+            lecture = Schedule.objects.get(id=schedule.id)
+            subject = Subject.objects.get(id=schedule.subject.id)
+            x = 1  # a counter to fetch each checkbox from template by their name
+            students = self.get_students(kwargs['pk'])
+            for student in students:
+                course = Course.objects.get(id=student.course.id)
+                mark = self.request.POST.get(f'mark{x}')
+                if not mark:  # unchecked boxes in submit attendance
+                    mark = 0
+                attendance = Attendance(lecture=lecture, subject=subject, course=course, student=student, lecture_date=date, mark=mark)
                 attendance.save()
                 x += 1
-
             return redirect('schedule')
+        return render(request, self.template_name, {'form': form, 'students': students})
 
 
 @method_decorator(staff_member_required, name='dispatch')
