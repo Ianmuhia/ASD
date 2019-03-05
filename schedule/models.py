@@ -9,8 +9,7 @@ from reportlab.lib.pagesizes import A4
 import datetime
 from subject.models import Subject
 from course.models import Course
-from student.models import Student
-from student.models import sem
+from student.models import Student, sem
 
 
 class Schedule(models.Model):
