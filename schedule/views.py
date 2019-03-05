@@ -92,40 +92,6 @@ class SubmitAttendanceView(View):
         return render(request, self.template_name, {'form': form, 'students': students})
 
 
-@method_decorator(staff_member_required, name='dispatch')
-class ScheduleCreateView(CreateView):
-    model = Schedule
-    form_class = ScheduleForm
-
-    def get_context_data(self, **kwargs):
-        context = super(ScheduleCreateView, self).get_context_data(**kwargs)
-        context['pageName'] = 'Create Schedule'
-        return context
-
-
-@method_decorator(staff_member_required, name='dispatch')
-class ScheduleUpdateView(UpdateView):
-    model = Schedule
-    form_class = ScheduleForm
-
-    def get_context_data(self, **kwargs):
-        context = super(ScheduleUpdateView, self).get_context_data(**kwargs)
-        context['pageName'] = 'Update Schedule'
-        context['day_list'] = Schedule.objects.get(id=self.object.id).day  # fetch day list and check already selected days
-        return context
-
-
-@method_decorator(staff_member_required, name='dispatch')
-class ScheduleDeleteView(DeleteView):
-    model = Schedule
-    success_url = reverse_lazy('schedule')
-
-    def get_context_data(self, **kwargs):
-        context = super(ScheduleDeleteView, self).get_context_data(**kwargs)
-        context['pageName'] = 'Delete Schedule'
-        return context
-
-
 class CheckAttendanceView(LoginRequiredMixin, View):
     form_class = CheckAttendanceForm
     template_name = "schedule/check_attendance_form.html"
@@ -159,3 +125,37 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         form = self.form_class  # if form not valid
 
         return render(request, self.template_name, {'form': form})
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ScheduleCreateView(CreateView):
+    model = Schedule
+    form_class = ScheduleForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ScheduleCreateView, self).get_context_data(**kwargs)
+        context['pageName'] = 'Create Schedule'
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ScheduleUpdateView(UpdateView):
+    model = Schedule
+    form_class = ScheduleForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ScheduleUpdateView, self).get_context_data(**kwargs)
+        context['pageName'] = 'Update Schedule'
+        context['day_list'] = Schedule.objects.get(id=self.object.id).day  # fetch day list and check already selected days
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ScheduleDeleteView(DeleteView):
+    model = Schedule
+    success_url = reverse_lazy('schedule')
+
+    def get_context_data(self, **kwargs):
+        context = super(ScheduleDeleteView, self).get_context_data(**kwargs)
+        context['pageName'] = 'Delete Schedule'
+        return context
