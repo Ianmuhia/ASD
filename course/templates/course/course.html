@@ -21,20 +21,26 @@
 
 	{% if query %}
 		<h2 class="m-3 font-weight-bold">Search Results For {{query}} :</h2>
-	{% endif %}			
-	
-	<ul>
+	{% endif %}
 
-	{% for course in courses%}
+	{% if courses%}
+		<ul>
 
-		<li class="list-view">
-			<a class="update" href="{% url 'course-update' course.pk %}">{{course}}</a>
-			<a class="dlt" href="{% url 'course-delete' course.pk %}"><i class="fas fa-trash-alt"></i></a>
-		</li>
+		{% for course in courses%}
 
-	{% endfor %}
+			<li class="list-view">
+				<a class="update" href="{% url 'course-update' course.pk %}">{{course}}</a>
+				<a class="dlt" href="{% url 'course-delete' course.pk %}"><i class="fas fa-trash-alt"></i></a>
+			</li>
 
-	</ul>
+		{% endfor %}
+
+		</ul>
+	{% else %}
+		<div class="alert alert-warning">
+			no content found
+		</div>
+	{% endif %}
 
 </div>
 {% endblock %}

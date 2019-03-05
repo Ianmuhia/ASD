@@ -21,6 +21,7 @@ class StudentListView(LoginRequiredMixin, ListView, FormView):
     def get_context_data(self, **kwargs):
         context = super(StudentListView, self).get_context_data(**kwargs)
         context['pageName'] = 'Student'
+        context['query'] = self.query
         return context
 
     def get_queryset(self):
@@ -43,7 +44,7 @@ class StudentDetailView(LoginRequiredMixin, DetailView):
         queryset = Attendance.objects.filter(student=self.object.id)
         if queryset:
             attendance = attendanceCalculator(queryset)
-            context['present'] = attendance['attendance_percent']
+            context['present'] = attendance['attendancePercent']
         else:
             context['present'] = "No Attendance Data"
         return context

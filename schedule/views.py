@@ -41,7 +41,7 @@ class ScheduleListView(LoginRequiredMixin, ListView, FormView):
         return Schedule.objects.filter(teacher=self.request.user).order_by('lecture_no')  # returns all schedules with teacher = logged in teacher
 
 
-class ScheduleDetailView(LoginRequiredMixin, DetailView, FormView):
+class ScheduleDetailView(LoginRequiredMixin, DetailView):
     template_name = 'schedule/schedule_detail.html'
     model = Schedule
     context_object_name = 'schedule'
@@ -79,15 +79,16 @@ class SubmitAttendanceView(View):
             subject = Subject.objects.get(id=schedule.subject.id)
             x = 1  # a counter to fetch each checkbox from template by their name
             students = self.get_students(kwargs['pk'])
-            for student in students:
-                course = Course.objects.get(id=student.course.id)
-                mark = self.request.POST.get(f'mark{x}')
-                if not mark:  # unchecked boxes in submit attendance
-                    mark = 0
-                attendance = Attendance(lecture=lecture, subject=subject, course=course, student=student, lecture_date=date, mark=mark)
-                attendance.save()
-                x += 1
-            return redirect('schedule')
+            if students:
+                for student in students:
+                    course = Course.objects.get(id=student.course.id)
+                    mark = self.request.POST.get(f'mark{x}')
+                    if not mark:  # unchecked boxes in submit attendance
+                        mark = 0
+                    attendance = Attendance(lecture=lecture, subject=subject, course=course, student=student, lecture_date=date, mark=mark)
+                    attendance.save()
+                    x += 1
+                return redirect('schedule')
         return render(request, self.template_name, {'form': form, 'students': students})
 
 
@@ -153,7 +154,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
                 else:
                     notFound = "No Content Found"
 
-            return render(request, self.template_name, {'attendance': attendance, 'notFound': notFound, 'form': form})
+            return render(request, self.template_name, {'attendance': attendance, 'notFound': notFound, 'form': form, 'roll_no': roll_no})
 
         form = self.form_class  # if form not valid
 

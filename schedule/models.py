@@ -13,6 +13,34 @@ from student.models import Student
 from student.models import sem
 
 
+class Schedule(models.Model):
+    lecture_no = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    course = models.ManyToManyField(Course)
+    sem = models.CharField(max_length=12, choices=sem(), blank=False)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    day = models.CharField(max_length=42, default=None)
+
+    def __str__(self):
+        return f'{self.lecture_no}'
+
+    def get_absolute_url(self, **kwargs):
+        return reverse('schedule-detail', kwargs={'pk': self.pk})
+
+
+class Attendance(models.Model):
+
+    lecture = models.ForeignKey(Schedule, on_delete=models.SET_NULL, null=True)
+    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    lecture_date = models.DateField(default=datetime.date.today)
+    mark = models.BooleanField()
+
+    def __str__(self):
+        return f'Roll no : {self.student.roll_no}, Date : {self.lecture_date}'
+
+
 def attendanceCalculator(queryset):  # For calculating attendance details of student
     pDays = 0
     detailList = []
@@ -69,31 +97,3 @@ def pdfGen(queryset):  # For Genrating Pdf file of student attendance
     response.write(pdf)
 
     return response
-
-
-class Schedule(models.Model):
-    lecture_no = models.PositiveIntegerField(validators=[MinValueValidator(1)])
-    course = models.ManyToManyField(Course)
-    sem = models.CharField(max_length=12, choices=sem(), blank=False)
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE)
-    day = models.CharField(max_length=42, default=None)
-
-    def __str__(self):
-        return f'{self.lecture_no}'
-
-    def get_absolute_url(self, **kwargs):
-        return reverse('schedule-detail', kwargs={'pk': self.pk})
-
-
-class Attendance(models.Model):
-
-    lecture = models.ForeignKey(Schedule, on_delete=models.SET_NULL, null=True)
-    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    lecture_date = models.DateField(default=datetime.date.today)
-    mark = models.BooleanField()
-
-    def __str__(self):
-        return f'Roll no : {self.student.roll_no}, Date : {self.lecture_date}'

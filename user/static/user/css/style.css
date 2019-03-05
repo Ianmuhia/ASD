@@ -190,8 +190,8 @@ a.open-side-nav{
 	border-radius: 10px;
 	display: inline-block;
 	cursor: pointer;
-	max-width:18vw;
-	max-height:18vw;
+	max-width:16vw;
+	max-height:16vw;
 	text-align: center;
 	align-items: center;
 	transform: translateY(60vh);

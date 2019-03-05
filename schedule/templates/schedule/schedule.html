@@ -23,19 +23,24 @@
 		{% if query %}
 			<h2 class="m-3 font-weight-bold">Search Results For {{query}} :</h2>
 		{% endif %}
-		<ul>
-			{% for schedule in schedules %}
-				<li class="list-view">
-					<a class="update" href="{% url 'schedule-detail' schedule.pk %}">
-					 {% if user.is_staff %}
-					 	Teacher => {{schedule.teacher}} ,
-					 {% endif %} 
-					 Lecture no => {{schedule.lecture_no}} , 
-					 Subject => {{schedule.subject}} 
-					</a>
-				</li>
-			{% endfor %}
-			{{author}}
-		</ul>
+		{% if schedules %}
+			<ul>
+				{% for schedule in schedules %}
+					<li class="list-view">
+						<a class="update" href="{% url 'schedule-detail' schedule.pk %}">
+						 {% if user.is_staff %}
+						 	Teacher => {{schedule.teacher}} ,
+						 {% endif %} 
+						 Lecture no => {{schedule.lecture_no}} , 
+						 Subject => {{schedule.subject}} 
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<div class="alert alert-warning">
+				no content found
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}

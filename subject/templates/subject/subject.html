@@ -18,9 +18,11 @@
 			  	</div>
 			</div>
 		</form>
-			{% if query %}
-				<h2 class="m-3 font-weight-bold">Search Results For {{query}} :</h2>
-			{% endif %}			
+		{% if query %}
+			<h2 class="m-3 font-weight-bold">Search Results For {{query}} :</h2>
+		{% endif %}			
+
+		{% if subjects %}
 			<ul>
 				{% for subject in subjects%}
 					<li class="list-view">
@@ -31,6 +33,10 @@
 					</li>
 				{% endfor %}
 			</ul>
-		
+		{% else %}
+			<div class="alert alert-warning">
+				no content found
+			</div>
+		{% endif %}
 		</div>
 {% endblock %}

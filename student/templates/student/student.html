@@ -24,11 +24,16 @@
 		{% if query %}
 			<h2 class="m-3 font-weight-bold">Search Results For {{query}} :</h2>
 		{% endif %}			
-
-		<ul>
-			{% for student in students %}
-				<li class="list-view"><a class="update" href="{% url 'student-detail' student.pk %}"><span class="list-no"> {{student.roll_no}}</span> {{student.name}}</a></li>
-			{% endfor %}
-		</ul>
+		{% if students %}
+			<ul>
+				{% for student in students %}
+					<li class="list-view"><a class="update" href="{% url 'student-detail' student.pk %}"><span class="list-no"> {{student.roll_no}}</span> {{student.name}}</a></li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<div class="alert alert-warning">
+				no content found
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}

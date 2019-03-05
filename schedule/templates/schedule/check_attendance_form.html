@@ -23,7 +23,7 @@
 			</div>
 		
 		{% if attendance %}
-				<!--<h2 class="m-3 font-weight-bold">Attendance of {{query}} :</h2> -->
+				<h2 class="m-3 font-weight-bold">Attendance of {{roll_no}} :</h2>
 				<p>Name of Student : {{attendance.name}}</p>
 				<p>Total no. of days : {{attendance.totalDays}}</p>
 				<p>Days Present : {{attendance.presentDays}}</p>
@@ -31,10 +31,9 @@
 					
 		{% elif notFound %}
 				
-				<div class="alert bg-danger m-5">
-					<span class="text-white">{{notFound}}</span>
+				<div class="alert alert-warning m-5">
+					{{notFound}}
 				</div>
-				{# <!--href="{% url 'pdf-gen' request.GET.roll_no request.GET.start_date request.GET.end_date %}" --> #}
 		{% endif %}
 		
 	</form>
