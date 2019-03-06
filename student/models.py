@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.core.validators import MinValueValidator
 from subject.models import Subject
 from course.models import Course
+# from PIL import Image
 
 
 def sem():
@@ -33,6 +34,14 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     img = Image.open(self.image.path)
+    #     if img.height > 300 or img.width > 300:
+    #         outputSize = (300, 300)
+    #         img.thumbnail(outputSize)
+    #         img.save(self.image.path)
 
     def get_absolute_url(self, **kwargs):
         return reverse('student-detail', kwargs={'pk': self.pk})
