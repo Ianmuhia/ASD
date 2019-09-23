@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'storages',
+    #'storages',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,7 +61,7 @@ ROOT_URLCONF = 'AttendanceSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,9 +82,12 @@ WSGI_APPLICATION = 'AttendanceSystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ASD',
+        'USER': 'postgres',
+        'PASSWORD': 'johnte2536',
+        'HOST':'localhost'
+        }
 }
 
 
@@ -137,4 +140,4 @@ AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_S3_REGION_NAME = "ap-south-1"
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
